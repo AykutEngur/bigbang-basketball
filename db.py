@@ -1,9 +1,27 @@
 import os
 import pymysql
 import pymysql.cursors
+from urllib.parse import urlparse
 
 
 def get_connection(dict_cursor=False):
+    database_url = os.environ.get("DATABASE_URL")
+    
+    if database_url:
+        # Railway DATABASE_URL parse et
+        parsed = urlparse(database_url)
+        cursor_class = pymysql.cursors.DictCursor if dict_cursor else pymysql.cursors.Cursor
+        return pymysql.connect(
+            host=parsed.hostname,
+            port=parsed.port or 3306,
+            user=parsed.username,
+            password=parsed.password,
+            db=parsed.path.lstrip("/"),
+            charset="utf8mb4",
+            cursorclass=cursor_class,
+        )
+    
+    # Fallback: local .env
     cursor_class = pymysql.cursors.DictCursor if dict_cursor else pymysql.cursors.Cursor
     return pymysql.connect(
         host=os.environ.get("DB_HOST", "localhost"),
