@@ -9,13 +9,13 @@ import mysql.connector
 def _connection_kwargs(include_database=True):
     kwargs = {
         "host": os.environ.get("DB_HOST", "localhost"),
+        "port": int(os.environ.get("DB_PORT", 3306)),
         "user": os.environ.get("DB_USER", "root"),
         "password": os.environ.get("DB_PASSWORD", ""),
     }
     if include_database:
         kwargs["database"] = os.environ.get("DB_NAME", "bigbang_basketball")
     return kwargs
-
 
 def get_connection():
     return mysql.connector.connect(**_connection_kwargs())
