@@ -31,7 +31,7 @@
           <div class="request-card">
             <div class="request-card-photo">
               {% if req.profile_photo %}
-                <img src="{{ url_for('static', filename='uploads/profile_photos/' + req.profile_photo) }}" alt="">
+                <img src="{{ req.profile_photo }}" alt="">
               {% else %}
                 <div class="request-card-photo-placeholder">{{ req.first_name[0] }}</div>
               {% endif %}
@@ -72,7 +72,7 @@
         <div class="request-card">
           <div class="request-card-photo" style="background: var(--bg-light); border-radius: 12px; overflow:hidden;">
             {% if req.team_logo %}
-              <img src="{{ url_for('static', filename='uploads/team_logos/' + req.team_logo) }}" alt="">
+              <img src="{{ req.team_logo }}" alt="">
             {% else %}
               <div class="request-card-photo-placeholder">&#127936;</div>
             {% endif %}

@@ -543,10 +543,10 @@ def create_team():
         return render_with_error("Takım kurulurken bir sorun oluştu.")
 
     #send_team_created_email(player["email"], player["first_name"], form_data["team_name"])
-   # return render_template(
-    #    "create_team_success.html", team_name=form_data["team_name"],
-    #    min_team_size=MIN_TEAM_SIZE,
-    #)
+    return render_template(
+       "create_team_success.html", team_name=form_data["team_name"],
+       min_team_size=MIN_TEAM_SIZE,
+    )
 
 
 # ----------------------------------------------------------------------
