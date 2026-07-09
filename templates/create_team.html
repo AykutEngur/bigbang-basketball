@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %}Takım Kur — Big Bang Basketball{% endblock %}
+
+{% block content %}
+  <section class="section section-tint">
+    <div class="section-heading">
+      <h2>Takım Kur</h2>
+      <p>Takımının ismini ve forma numaranı belirle, takım liderin sen olacaksın.</p>
+    </div>
+
+    <form class="form-card" method="POST" action="{{ url_for('create_team') }}" enctype="multipart/form-data" novalidate>
+
+      {% if error %}
+        <div class="form-error">{{ error }}</div>
+      {% endif %}
+
+      <div class="form-group">
+        <label for="team_name">Takımın İsmi</label>
+        <input type="text" id="team_name" name="team_name" required
+               value="{{ form_data.team_name if form_data else '' }}">
+      </div>
+
+      <div class="form-group">
+        <label for="logo">Takım Logosu (opsiyonel)</label>
+        <div class="logo-upload-row">
+          <div class="logo-preview" id="logo-preview">&#127936;</div>
+          <label for="logo" class="btn btn-outline logo-upload-label">Logo Seç</label>
+          <input type="file" id="logo" name="logo" accept=".png,.jpg,.jpeg,.webp">
+        </div>
+        <div class="hint">PNG, JPG veya WEBP — max 5 MB. Kare olarak kırpılacak.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="jersey_number">Senin Forma Numaran</label>
+        <input type="number" id="jersey_number" name="jersey_number" min="0" max="99" required
+               value="{{ form_data.jersey_number if form_data else '' }}">
+        <div class="hint">Takım lideri olarak senin de bir forma numaran olmalı (0-99)</div>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="contract_accepted" name="contract_accepted"
+               {{ 'checked' if form_data and form_data.contract_accepted else '' }} required>
+        <label for="contract_accepted">
+          <a href="#" id="open-contract-modal">Katılımcı sözleşmesini</a>
+          ve takım liderliği kurallarını okudum, kabul ediyorum. Takım lideri olarak
+          oyuncu kabul etme ve takımdan çıkarma yetkisine sahip olduğumu, ancak takımı
+          silme yetkimin bulunmadığını (bu yalnızca Federasyon'a aittir) anlıyorum.
+          Takım ismimde veya logomda uygunsuz içerik bulunması durumunda hesabımın
+          banlanabileceğini kabul ediyorum.
+        </label>
+      </div>
+
+      <button type="submit" class="btn btn-primary form-submit">Takımı Kur</button>
+    </form>
+  </section>
+
+  <!-- SÖZLEŞME MODAL -->
+  <div class="modal-overlay" id="contract-modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Katılımcı Sözleşmesi</h3>
+        <button type="button" class="modal-close" id="close-contract-modal" aria-label="Kapat">&times;</button>
+      </div>
+      <div class="modal-body contract-box">
+        <h3>1. Turnuvanın amacı</h3>
+        <p>
+          Big Bang Basketball, kâr amacı gütmeyen, amatör bir basketbol
+          ligidir. Federasyonun önceliği insanları basketbolla bir araya
+          getirip sosyalleştirmektir. Katılım bedelleri saha kirası,
+          hakem ücretleri ve ödüller gibi organizasyon giderlerini
+          karşılamak için kullanılır.
+        </p>
+
+        <h3>2. Katılım ve devamlılık</h3>
+        <p>
+          Her oyuncu, kayıt sırasında bu sözleşmeyi kabul ederek normal
+          sezon ve (varsa) Final Four maçlarına düzenli katılmayı taahhüt
+          eder.
+        </p>
+        <ul>
+          <li>
+            Bir oyuncu sezon boyunca <strong>2 veya daha fazla maça</strong>
+            geçerli bir mazeret bildirmeden katılmazsa, Federasyona
+            <strong>tazminat ödemekle</strong> yükümlüdür.
+          </li>
+          <li>
+            İkinci kaçırılan maçtan sonraki <strong>her ek maç</strong> için
+            de ayrıca tazminat uygulanır.
+          </li>
+          <li>
+            Tazminat tutarları ve mazeret bildirim süreci Federasyon
+            tarafından belirlenir ve oyunculara ayrıca duyurulur.
+          </li>
+        </ul>
+
+        <h3>3. Sportmenlik</h3>
+        <p>
+          Her oyuncu sahada ve saha dışında sportmenlik ruhuna uygun
+          davranmayı kabul eder. Hakeme, rakip oyunculara veya takım
+          arkadaşlarına yönelik saygısız davranış, kasıtlı sakatlama
+          girişimi veya turnuvanın dostluk/sosyalleşme amacını bozucu
+          tutumlar Federasyon tarafından değerlendirilir ve gerekirse
+          oyuncu turnuvadan uzaklaştırılabilir.
+        </p>
+
+        <h3>4. Katılım bedeli</h3>
+        <p>
+          Oyuncu, turnuvaya katılım için belirlenen katılım bedelini
+          öder. Bu bedel saha kirası, hakem ücretleri ve ödüller gibi
+          organizasyon giderlerine katkı amacı taşır; turnuva kâr amacı
+          gütmemektedir.
+        </p>
+
+        <h3>5. Kişisel veriler</h3>
+        <p>
+          Kayıt sırasında paylaşılan ad, soyad, e-posta ve doğum tarihi
+          gibi bilgiler yalnızca turnuva organizasyonu (iletişim, fikstür,
+          istatistik takibi) amacıyla kullanılır ve üçüncü taraflarla
+          paylaşılmaz.
+        </p>
+
+        <h3>6. Takım liderliği</h3>
+        <p>
+          Takım kuran oyuncu otomatik olarak takım lideri olur ve oyuncu
+          kabul etme/çıkarma yetkisine sahip olur. Takım silme yetkisi
+          yalnızca Federasyon'a aittir. Takım ismi veya logosunda uygunsuz
+          içerik bulunması durumunda takım lideri ve ilgili hesap
+          banlanabilir.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="accept-contract-btn">Okudum, Anladım</button>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

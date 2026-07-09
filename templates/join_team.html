@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Takıma Katıl — Big Bang Basketball{% endblock %}
+
+{% block content %}
+  <section class="section section-light">
+    <div class="section-heading">
+      <h2>Takıma Katıl</h2>
+      <p>Mevcut takımlardan birine katılma isteği gönder.</p>
+    </div>
+
+    <div class="team-grid">
+      {% if teams %}
+        {% for t in teams %}
+          <a href="{{ url_for('team_detail', team_id=t.id) }}" class="team-card">
+            <div class="team-card-logo">
+              {% if t.logo %}
+                <img src="{{ url_for('static', filename='uploads/team_logos/' + t.logo) }}" alt="{{ t.name }} logosu">
+              {% else %}
+                <div class="team-card-logo-placeholder">&#127936;</div>
+              {% endif %}
+            </div>
+            <div class="team-card-name">{{ t.name }}</div>
+            <div class="team-card-meta">
+              {% if t.player_count < min_team_size %}
+                <span class="badge badge-orange">{{ t.player_count }} / {{ min_team_size }} oyuncu</span>
+              {% else %}
+                <span class="badge badge-navy">{{ t.player_count }} oyuncu</span>
+              {% endif %}
+            </div>
+          </a>
+        {% endfor %}
+      {% else %}
+        <p style="text-align:center; color: var(--text-gray); grid-column: 1 / -1;">
+          Henüz kurulmuş bir takım yok. İlk takımı sen kur!
+        </p>
+      {% endif %}
+    </div>
+
+    <div style="text-align:center; margin-top: 36px;">
+      <a href="{{ url_for('create_team') }}" class="btn btn-outline" style="border-color: var(--navy); color: var(--navy);">
+        Yeni Takım Kur
+      </a>
+    </div>
+  </section>
+{% endblock %}

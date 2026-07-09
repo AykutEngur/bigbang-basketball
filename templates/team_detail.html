@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}{{ team.name }} — Big Bang Basketball{% endblock %}
+
+{% block content %}
+  <section class="section section-light">
+    <div class="team-detail-header">
+      <div class="team-detail-logo">
+        {% if team.logo %}
+          <img src="{{ url_for('static', filename='uploads/team_logos/' + team.logo) }}" alt="{{ team.name }} logosu">
+        {% else %}
+          <div class="team-card-logo-placeholder">&#127936;</div>
+        {% endif %}
+      </div>
+      <h2>{{ team.name }}</h2>
+      {% if captain %}
+        <p class="team-detail-captain">Takım Lideri: <strong>{{ captain.first_name }} {{ captain.last_name }}</strong></p>
+      {% endif %}
+
+      <div class="team-detail-meta">
+        {% if members|length < min_team_size %}
+          <span class="badge badge-orange">{{ members|length }} / {{ min_team_size }} oyuncu</span>
+        {% else %}
+          <span class="badge badge-navy">{{ members|length }} oyuncu</span>
+        {% endif %}
+      </div>
+
+      <div style="margin-top: 20px;">
+        {% if already_member %}
+          <span class="btn btn-outline" style="border-color: var(--border-soft); color: var(--text-gray); cursor:default;">
+            Bu takımın üyesisin
+          </span>
+        {% elif has_pending %}
+          <span class="btn btn-outline" style="border-color: var(--orange); color: var(--orange); cursor:default;">
+            Katılma isteğin onay bekliyor
+          </span>
+        {% else %}
+          <a href="{{ url_for('request_join_team', team_id=team.id) }}" class="btn btn-join-team">Takıma Katıl</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="team-roster">
+      <h3>Kadro</h3>
+      <div class="player-list">
+        {% if members %}
+          {% for m in members %}
+            <div class="player-row">
+              <div class="player-row-photo">
+                {% if m.profile_photo %}
+                  <img src="{{ url_for('static', filename='uploads/profile_photos/' + m.profile_photo) }}" alt="{{ m.first_name }} {{ m.last_name }}">
+                {% else %}
+                  <div class="player-row-photo-placeholder">{{ m.first_name[0] }}</div>
+                {% endif %}
+              </div>
+              <div class="player-row-number">{{ m.jersey_number if m.jersey_number is not none else '—' }}</div>
+              <div class="player-row-info">
+                <div class="player-row-name">{{ m.first_name }} {{ m.last_name }}</div>
+                {% if captain and m.id == captain.id %}
+                  <span class="badge badge-navy">Takım Lideri</span>
+                {% endif %}
+              </div>
+              <div class="player-row-stat">
+                <div class="player-row-stat-label">Sayı</div>
+                <div class="player-row-stat-value">{{ m.points_total }}</div>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p style="text-align:center; color: var(--text-gray);">Henüz kadroda oyuncu yok.</p>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+{% endblock %}

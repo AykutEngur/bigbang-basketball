@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}Big Bang Basketball — Ana Sayfa{% endblock %}
+
+{% block content %}
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <img class="hero-logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Big Bang Basketball logo">
+      <h1>{{ league_name }}</h1>
+      <p class="slogan">{{ slogan }}</p>
+
+      <div class="hero-ctas">
+        <a href="{{ url_for('register') }}" class="btn btn-primary">Kayıt Ol</a>
+        <a href="{{ url_for('placeholder', page_key='fixtures') }}" class="btn btn-outline">Fikstürü Gör</a>
+      </div>
+
+      <span class="hashtag-pill">{{ hashtag }}</span>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats-strip">
+    <div class="stats-grid">
+      {% for stat in stats %}
+      <div>
+        <div class="stat-number">{{ stat.number }}</div>
+        <div class="stat-label">{{ stat.label }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- QUICK LINKS -->
+  <section class="section section-light">
+    <div class="section-heading">
+      <h2>Hemen başla</h2>
+      <p>Kayıt ol, takım kur ya da mevcut bir takıma katıl — ligin her adımı burada.</p>
+    </div>
+
+    <div class="quicklinks-grid">
+
+      <a href="{{ url_for('register') }}" class="quicklink-card">
+        <div class="quicklink-icon">&#9989;</div>
+        <h3>Kayıt Ol</h3>
+        <p>Bilgilerini gir, katılım bedelini öde, ligin parçası ol.</p>
+        <span class="quicklink-arrow">Devam et &rarr;</span>
+      </a>
+
+      <a href="{{ url_for('placeholder', page_key='create-team') }}" class="quicklink-card">
+        <div class="quicklink-icon">&#127936;</div>
+        <h3>Takım Kur</h3>
+        <p>Kendi takımını oluştur, oyuncularını davet et.</p>
+        <span class="quicklink-arrow">Devam et &rarr;</span>
+      </a>
+
+      <a href="{{ url_for('placeholder', page_key='join-team') }}" class="quicklink-card">
+        <div class="quicklink-icon">&#129309;</div>
+        <h3>Takıma Katıl</h3>
+        <p>Bir takım arıyorsan, mevcut takımlara katılma daveti gönder.</p>
+        <span class="quicklink-arrow">Devam et &rarr;</span>
+      </a>
+
+      <a href="{{ url_for('placeholder', page_key='player-pool') }}" class="quicklink-card">
+        <div class="quicklink-icon">&#128101;</div>
+        <h3>Oyuncu Havuzu</h3>
+        <p>Takımı olmayan oyuncuların havuzuna katıl, free agent ol.</p>
+        <span class="quicklink-arrow">Devam et &rarr;</span>
+      </a>
+
+      <a href="{{ url_for('placeholder', page_key='fixtures') }}" class="quicklink-card">
+        <div class="quicklink-icon">&#128197;</div>
+        <h3>Fikstür</h3>
+        <p>Maç takvimini, skorları ve puan durumunu takip et.</p>
+        <span class="quicklink-arrow">Devam et &rarr;</span>
+      </a>
+
+      <a href="{{ url_for('profile') }}" class="quicklink-card">
+        <div class="quicklink-icon">&#128100;</div>
+        <h3>Oyuncu Sayfası</h3>
+        <p>İstatistiklerini, maç geçmişini ve profilini görüntüle.</p>
+        <span class="quicklink-arrow">Devam et &rarr;</span>
+      </a>
+
+      <a href="{{ url_for('placeholder', page_key='payment') }}" class="quicklink-card">
+        <div class="quicklink-icon">&#128179;</div>
+        <h3>Ödeme</h3>
+        <p>Katılım bedelini güvenli şekilde öde.</p>
+        <span class="quicklink-arrow">Devam et &rarr;</span>
+      </a>
+
+      <a href="https://www.instagram.com/bigbang_basketball" target="_blank" rel="noopener" class="quicklink-card">
+        <div class="quicklink-icon">&#128247;</div>
+        <h3>Instagram</h3>
+        <p>{{ instagram_handle }} — duyurular, kayıtlar, behind the scenes.</p>
+        <span class="quicklink-arrow">Takip et &rarr;</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- FORMAT -->
+  <section class="section section-tint">
+    <div class="section-heading">
+      <h2>Turnuva formatı</h2>
+      <p>6 takım, 19 maç, 5 hafta sürecek heyecan dolu bir sezon.</p>
+    </div>
+
+    <div class="format-grid">
+      <div class="format-card">
+        <div class="num">1</div>
+        <h3>Normal sezon</h3>
+        <p>6 takım, her biri diğer tüm takımlarla 1'er kez oynar. Toplamda 15 lig maçı, 3 hafta sürer.</p>
+      </div>
+      <div class="format-card">
+        <div class="num">2</div>
+        <h3>Final Four</h3>
+        <p>İlk 4 takım yarı finalleri oynar: 1. vs 4., 2. vs 3. Kazananlar finale, kaybedenler 3.lük maçına çıkar.</p>
+      </div>
+      <div class="format-card">
+        <div class="num">3</div>
+        <h3>Ödüller</h3>
+        <p>Şampiyon takıma 10.000 TL, F4 MVP'ye 1.500 TL, normal sezon MVP'sine 500 TL ödül.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTAGRAM CALLOUT -->
+  <section class="section section-light">
+    <div class="instagram-callout">
+      <div class="ig-icon">&#128247;</div>
+      <div class="ig-text">
+        <h3>{{ instagram_handle }}</h3>
+        <p>Kayıt duyuruları, fikstür güncellemeleri ve sahadan kareler için takip et.</p>
+      </div>
+      <a href="{{ instagram_url }}" target="_blank" rel="noopener" class="btn btn-primary">Takip Et</a>
+    </div>
+  </section>
+
+{% endblock %}

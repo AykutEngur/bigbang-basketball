@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Takım Kuruldu — Big Bang Basketball{% endblock %}
+
+{% block content %}
+  <section class="section section-light">
+    <div class="form-card" style="text-align:center;">
+      <div class="form-success-icon">&#127942;</div>
+      <h2 style="font-family: var(--font-display); color: var(--navy); margin: 0 0 10px;">
+        "{{ team_name }}" Kuruldu!
+      </h2>
+      <p style="color: var(--text-gray); margin-bottom: 10px;">
+        Takım liderliğine atandın. Bilgilendirme mailini de gönderdik.
+      </p>
+      <p style="color: var(--text-gray); margin-bottom: 24px;">
+        Şimdi takımının en az <strong>{{ min_team_size }}</strong> oyuncuya
+        ulaşması gerekiyor. Oyuncu Havuzu'ndan free agent oyuncularla iletişime
+        geçebilir, ya da onların sana katılma isteği göndermesini bekleyebilirsin.
+      </p>
+      <a href="{{ url_for('profile') }}" class="btn btn-primary">Profiline Git</a>
+    </div>
+  </section>
+{% endblock %}

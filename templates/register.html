@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block title %}Kayıt Ol — Big Bang Basketball{% endblock %}
+
+{% block content %}
+  <section class="section section-tint">
+    <div class="section-heading">
+      <h2>Kayıt Ol</h2>
+      <p>Bilgilerini gir, sözleşmeyi onayla, ligin parçası ol.</p>
+    </div>
+
+    <form class="form-card" method="POST" action="{{ url_for('register') }}" novalidate>
+
+      {% if error %}
+        <div class="form-error">{{ error }}</div>
+      {% endif %}
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="first_name">Ad</label>
+          <input type="text" id="first_name" name="first_name" required
+                 value="{{ form_data.first_name if form_data else '' }}">
+        </div>
+        <div class="form-group">
+          <label for="last_name">Soyad</label>
+          <input type="text" id="last_name" name="last_name" required
+                 value="{{ form_data.last_name if form_data else '' }}">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">E-posta adresi</label>
+        <input type="email" id="email" name="email" required
+               value="{{ form_data.email if form_data else '' }}">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="password">Şifre</label>
+          <input type="password" id="password" name="password" minlength="6" required>
+          <div class="hint">En az 6 karakter</div>
+        </div>
+        <div class="form-group">
+          <label for="password_confirm">Şifre (tekrar)</label>
+          <input type="password" id="password_confirm" name="password_confirm" minlength="6" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Doğum Tarihi</label>
+        <div class="dob-row">
+          <select name="dob_day" required>
+            <option value="" disabled {{ 'selected' if not (form_data and form_data.dob_day) else '' }}>Gün</option>
+            {% for d in range(1, 32) %}
+              <option value="{{ d }}" {{ 'selected' if form_data and form_data.dob_day == d|string else '' }}>{{ d }}</option>
+            {% endfor %}
+          </select>
+          <select name="dob_month" required>
+            <option value="" disabled {{ 'selected' if not (form_data and form_data.dob_month) else '' }}>Ay</option>
+            {% for m_num, m_name in months %}
+              <option value="{{ m_num }}" {{ 'selected' if form_data and form_data.dob_month == m_num|string else '' }}>{{ m_name }}</option>
+            {% endfor %}
+          </select>
+          <select name="dob_year" required>
+            <option value="" disabled {{ 'selected' if not (form_data and form_data.dob_year) else '' }}>Yıl</option>
+            {% for y in years %}
+              <option value="{{ y }}" {{ 'selected' if form_data and form_data.dob_year == y|string else '' }}>{{ y }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="contract_accepted" name="contract_accepted"
+               {{ 'checked' if form_data and form_data.contract_accepted else '' }} required>
+        <label for="contract_accepted">
+          <a href="#" id="open-contract-modal">Katılımcı sözleşmesini</a>
+          okudum, kabul ediyorum. Geçerli mazeret olmadan 2 veya daha fazla
+          maça katılmadığım takdirde Federasyona tazminat ödemeyi ve
+          sportmenlik kurallarına uymayı taahhüt ederim.
+        </label>
+      </div>
+
+      <button type="submit" class="btn btn-primary form-submit">Kayıt Ol</button>
+
+      <p class="form-switch-link">
+        Zaten hesabın var mı?
+        <a href="{{ url_for('login') }}">Giriş Yap</a>
+      </p>
+    </form>
+  </section>
+
+  <!-- SÖZLEŞME MODAL -->
+  <div class="modal-overlay" id="contract-modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Katılımcı Sözleşmesi</h3>
+        <button type="button" class="modal-close" id="close-contract-modal" aria-label="Kapat">&times;</button>
+      </div>
+      <div class="modal-body contract-box">
+        <h3>1. Turnuvanın amacı</h3>
+        <p>
+          Big Bang Basketball, kâr amacı gütmeyen, amatör bir basketbol
+          ligidir. Federasyonun önceliği insanları basketbolla bir araya
+          getirip sosyalleştirmektir. Katılım bedelleri saha kirası,
+          hakem ücretleri ve ödüller gibi organizasyon giderlerini
+          karşılamak için kullanılır.
+        </p>
+
+        <h3>2. Katılım ve devamlılık</h3>
+        <p>
+          Her oyuncu, kayıt sırasında bu sözleşmeyi kabul ederek normal
+          sezon ve (varsa) Final Four maçlarına düzenli katılmayı taahhüt
+          eder.
+        </p>
+        <ul>
+          <li>
+            Bir oyuncu sezon boyunca <strong>2 veya daha fazla maça</strong>
+            geçerli bir mazeret bildirmeden katılmazsa, Federasyona
+            <strong>tazminat ödemekle</strong> yükümlüdür.
+          </li>
+          <li>
+            İkinci kaçırılan maçtan sonraki <strong>her ek maç</strong> için
+            de ayrıca tazminat uygulanır.
+          </li>
+          <li>
+            Tazminat tutarları ve mazeret bildirim süreci Federasyon
+            tarafından belirlenir ve oyunculara ayrıca duyurulur.
+          </li>
+        </ul>
+
+        <h3>3. Sportmenlik</h3>
+        <p>
+          Her oyuncu sahada ve saha dışında sportmenlik ruhuna uygun
+          davranmayı kabul eder. Hakeme, rakip oyunculara veya takım
+          arkadaşlarına yönelik saygısız davranış, kasıtlı sakatlama
+          girişimi veya turnuvanın dostluk/sosyalleşme amacını bozucu
+          tutumlar Federasyon tarafından değerlendirilir ve gerekirse
+          oyuncu turnuvadan uzaklaştırılabilir.
+        </p>
+
+        <h3>4. Katılım bedeli</h3>
+        <p>
+          Oyuncu, turnuvaya katılım için belirlenen katılım bedelini
+          öder. Bu bedel saha kirası, hakem ücretleri ve ödüller gibi
+          organizasyon giderlerine katkı amacı taşır; turnuva kâr amacı
+          gütmemektedir.
+        </p>
+
+        <h3>5. Kişisel veriler</h3>
+        <p>
+          Kayıt sırasında paylaşılan ad, soyad, e-posta ve doğum tarihi
+          gibi bilgiler yalnızca turnuva organizasyonu (iletişim, fikstür,
+          istatistik takibi) amacıyla kullanılır ve üçüncü taraflarla
+          paylaşılmaz.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="accept-contract-btn">Okudum, Anladım</button>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

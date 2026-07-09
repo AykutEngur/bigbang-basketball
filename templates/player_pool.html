@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Oyuncu Havuzu — Big Bang Basketball{% endblock %}
+
+{% block content %}
+  <section class="section section-light">
+    <div class="section-heading">
+      <h2>Oyuncu Havuzu</h2>
+      <p>Big Bang Basketball'a kayıtlı tüm oyuncular.</p>
+    </div>
+
+    <div class="player-list">
+      {% if players %}
+        {% for p in players %}
+          <div class="player-row">
+            <div class="player-row-photo">
+              {% if p.profile_photo %}
+                <img src="{{ url_for('static', filename='uploads/profile_photos/' + p.profile_photo) }}" alt="{{ p.first_name }} {{ p.last_name }}">
+              {% else %}
+                <div class="player-row-photo-placeholder">{{ p.first_name[0] }}</div>
+              {% endif %}
+            </div>
+
+            <div class="player-row-number">
+              {{ p.jersey_number if p.jersey_number is not none else '—' }}
+            </div>
+
+            <div class="player-row-info">
+              <div class="player-row-name">{{ p.first_name }} {{ p.last_name }}</div>
+              <div class="player-row-meta">
+                {% if p.team_name %}
+                  <span class="badge badge-navy">{{ p.team_name }}</span>
+                {% else %}
+                  <span class="badge badge-orange">Free Agent</span>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="player-row-stat">
+              <div class="player-row-stat-label">Sayı</div>
+              <div class="player-row-stat-value">{{ p.points_total }}</div>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p style="text-align:center; color: var(--text-gray);">
+          Henüz kayıtlı oyuncu yok. İlk kaydolan sen ol!
+        </p>
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}

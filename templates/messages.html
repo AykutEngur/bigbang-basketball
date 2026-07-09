@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}Mesajlarım — Big Bang Basketball{% endblock %}
+
+{% block content %}
+<section class="section section-tint">
+  <div class="section-heading">
+    <h2>Mesajlarım</h2>
+    <p>Katılma istekleri, bildirimler ve gönderdiğin istekler burada.</p>
+  </div>
+
+  <div class="messages-layout">
+
+    <!-- SOL: Takim lideriyse gelen istekler -->
+    {% if my_team and my_team.captain_id == player.id %}
+    <div class="msg-panel">
+      <h3 class="msg-panel-title">
+        &#128236; "{{ my_team.name }}" — Gelen Katılma İstekleri
+        {% if pending_requests %}
+          <span class="nav-badge" style="position:static; display:inline-flex; margin-left:8px;">{{ pending_requests|length }}</span>
+        {% endif %}
+      </h3>
+
+      {% if decision_error %}
+        <div class="form-error" style="margin-bottom: 16px;">{{ decision_error }}</div>
+      {% endif %}
+
+      {% if pending_requests %}
+        <div class="requests-list">
+          {% for req in pending_requests %}
+          <div class="request-card">
+            <div class="request-card-photo">
+              {% if req.profile_photo %}
+                <img src="{{ url_for('static', filename='uploads/profile_photos/' + req.profile_photo) }}" alt="">
+              {% else %}
+                <div class="request-card-photo-placeholder">{{ req.first_name[0] }}</div>
+              {% endif %}
+            </div>
+            <div class="request-card-info">
+              <div class="request-card-name">{{ req.first_name }} {{ req.last_name }}</div>
+              <div class="request-card-meta">
+                Forma numarası: <strong>#{{ req.requested_jersey_number }}</strong>
+                &nbsp;·&nbsp;
+                <span style="color: var(--text-gray); font-size: 12px;">
+                  {{ req.created_at.strftime('%d.%m.%Y %H:%M') if req.created_at else '' }}
+                </span>
+              </div>
+            </div>
+            <div class="request-card-actions">
+              <form method="POST" action="{{ url_for('decide_join_in_app', request_id=req.id, decision='approve') }}" style="display:inline;">
+                <button type="submit" class="btn-action approve">&#10003; Onayla</button>
+              </form>
+              <form method="POST" action="{{ url_for('decide_join_in_app', request_id=req.id, decision='reject') }}" style="display:inline;">
+                <button type="submit" class="btn-action reject">&#10007; Reddet</button>
+              </form>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="msg-empty">Bekleyen katılma isteği yok.</p>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    <!-- ORTA: Oyuncunun gönderdiği bekleyen istekler (geri çekme) -->
+    {% if my_sent_requests %}
+    <div class="msg-panel">
+      <h3 class="msg-panel-title">&#9993; Gönderdiğim Bekleyen İstekler</h3>
+      <div class="requests-list">
+        {% for req in my_sent_requests %}
+        <div class="request-card">
+          <div class="request-card-photo" style="background: var(--bg-light); border-radius: 12px; overflow:hidden;">
+            {% if req.team_logo %}
+              <img src="{{ url_for('static', filename='uploads/team_logos/' + req.team_logo) }}" alt="">
+            {% else %}
+              <div class="request-card-photo-placeholder">&#127936;</div>
+            {% endif %}
+          </div>
+          <div class="request-card-info">
+            <div class="request-card-name">{{ req.team_name }}</div>
+            <div class="request-card-meta">
+              Forma numarası: <strong>#{{ req.requested_jersey_number }}</strong>
+              &nbsp;·&nbsp;
+              <span class="badge badge-orange">Onay bekliyor</span>
+            </div>
+          </div>
+          <div class="request-card-actions">
+            <form method="POST" action="{{ url_for('cancel_join_request', request_id=req.id) }}">
+              <button type="submit" class="btn-action cancel"
+                onclick="return confirm('Bu isteği geri çekmek istediğinden emin misin?')">
+                &#10007; Geri Çek
+              </button>
+            </form>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- SAĞ: Genel bildirimler -->
+    <div class="msg-panel">
+      <h3 class="msg-panel-title">&#128276; Bildirimler</h3>
+      {% if notifications %}
+        <div class="notifications-list">
+          {% for notif in notifications %}
+          <div class="notif-item {% if not notif.is_read %}notif-unread{% endif %}">
+            <div class="notif-icon">
+              {% if notif.type == 'join_request_received' %}&#128236;
+              {% elif notif.type == 'join_request_approved' %}&#9989;
+              {% elif notif.type == 'join_request_rejected' %}&#10060;
+              {% elif notif.type == 'join_request_cancelled' %}&#8505;
+              {% else %}&#128276;{% endif %}
+            </div>
+            <div class="notif-content">
+              <p class="notif-message">{{ notif.message }}</p>
+              <span class="notif-time">
+                {{ notif.created_at.strftime('%d.%m.%Y %H:%M') if notif.created_at else '' }}
+              </span>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="msg-empty">Henüz bildirim yok.</p>
+      {% endif %}
+    </div>
+
+  </div>
+</section>
+{% endblock %}

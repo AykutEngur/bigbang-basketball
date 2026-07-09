@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Profilim — Big Bang Basketball{% endblock %}
+
+{% block content %}
+  <section class="section section-tint">
+    <div class="section-heading">
+      <h2>Profilim</h2>
+      <p>Hesap bilgilerin. İstatistikler çok yakında burada olacak.</p>
+    </div>
+
+    <div class="form-card">
+
+      <div class="profile-photo-block">
+        {% if player.profile_photo %}
+          <img class="profile-photo-large" src="{{ url_for('static', filename='uploads/profile_photos/' + player.profile_photo) }}" alt="Profil fotoğrafı">
+        {% else %}
+          <div class="profile-photo-large profile-photo-placeholder">{{ player.first_name[0] }}</div>
+        {% endif %}
+
+        {% if photo_error %}
+          <div class="form-error" style="margin-top:14px;">{{ photo_error }}</div>
+        {% endif %}
+
+        <form method="POST" action="{{ url_for('upload_profile_photo') }}" enctype="multipart/form-data" class="photo-upload-form">
+          <label for="photo-input" class="btn btn-outline photo-upload-label">
+            {% if player.profile_photo %}Fotoğrafı Değiştir{% else %}Fotoğraf Ekle{% endif %}
+          </label>
+          <input type="file" id="photo-input" name="photo" accept=".png,.jpg,.jpeg,.webp" onchange="this.form.submit()">
+        </form>
+        <p class="hint" style="text-align:center; margin-top:8px;">PNG, JPG veya WEBP — max 5 MB</p>
+      </div>
+
+      <div class="form-group">
+        <label>Ad Soyad</label>
+        <input type="text" value="{{ player.first_name }} {{ player.last_name }}" disabled>
+      </div>
+      <div class="form-group">
+        <label>E-posta</label>
+        <input type="text" value="{{ player.email }}" disabled>
+      </div>
+      <div class="form-group">
+        <label>Doğum Tarihi</label>
+        <input type="text" value="{{ player.birth_date }}" disabled>
+      </div>
+      <div class="form-group">
+        <label>Takım</label>
+        <input type="text" value="{{ player.team_name if player.team_name else 'Henüz bir takıma katılmadın' }}" disabled>
+      </div>
+      <div class="form-group">
+        <label>Forma Numarası</label>
+        <input type="text" value="{{ player.jersey_number if player.jersey_number is not none else 'Henüz atanmadı' }}" disabled>
+      </div>
+
+      {% if player.team_id %}
+        <a href="{{ url_for('team_detail', team_id=player.team_id) }}" class="btn btn-outline" style="border-color: var(--navy); color: var(--navy); width:100%; text-align:center; margin-top:6px; margin-bottom: 10px;">
+          Takımımı Görüntüle
+        </a>
+      {% endif %}
+
+      <a href="{{ url_for('logout') }}" class="btn btn-outline" style="background: var(--navy); width:100%; text-align:center; margin-top:10px;">
+        Çıkış Yap
+      </a>
+    </div>
+  </section>
+{% endblock %}

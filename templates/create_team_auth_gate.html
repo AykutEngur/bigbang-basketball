@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Takım Kur — Big Bang Basketball{% endblock %}
+
+{% block content %}
+  <section class="section section-tint">
+    <div class="auth-gate-card">
+      <div class="auth-gate-icon">&#127936;</div>
+      <h2>{% if is_join_flow and team %}"{{ team.name }}" Takımına Katıl{% else %}Takım Kur{% endif %}</h2>
+      <p>
+        {% if is_join_flow %}
+          Bir takıma katılmak için önce hesabın olması gerekiyor.
+        {% else %}
+          Takım kurabilmek için önce hesabın olması ve giriş yapmış olman gerekiyor.
+          Takımı kuran kişi otomatik olarak takım lideri olur.
+        {% endif %}
+      </p>
+
+      <div class="auth-gate-actions">
+        <a href="{{ url_for('login', next=request.path) }}" class="btn btn-primary">Giriş Yap</a>
+        <a href="{{ url_for('register') }}" class="btn btn-outline" style="border-color: var(--navy); color: var(--navy);">Kayıt Ol</a>
+      </div>
+    </div>
+  </section>
+{% endblock %}

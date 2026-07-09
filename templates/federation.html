@@ -1,0 +1,269 @@
+{% extends "base.html" %}
+
+{% block title %}Federasyon — Big Bang Basketball{% endblock %}
+
+{% block content %}
+
+  <!-- HERO -->
+  <section class="fed-hero">
+    <div class="fed-hero-bg"></div>
+    <div class="fed-hero-inner">
+      <img class="fed-hero-logo animate-pop" src="{{ url_for('static', filename='img/logo.png') }}" alt="Big Bang Basketball logo">
+      <h1 class="animate-fade-up" style="animation-delay: 0.1s;">Big Bang Basketball Federasyonu</h1>
+      <p class="fed-hero-sub animate-fade-up" style="animation-delay: 0.22s;">
+        Where legends are born.
+      </p>
+      <div class="fed-hero-pills animate-fade-up" style="animation-delay: 0.34s;">
+        <span class="fed-pill">🏀 Sezon 1</span>
+        <span class="fed-pill">#BigBangBasketball</span>
+        <span class="fed-pill">📍 İstanbul</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAND -->
+  <section class="fed-stats-band">
+    <div class="fed-stats-inner">
+      <div class="fed-stat animate-count" data-target="6">
+        <span class="fed-stat-num">6</span>
+        <span class="fed-stat-label">Takım</span>
+      </div>
+      <div class="fed-stat-divider"></div>
+      <div class="fed-stat animate-count" data-target="36">
+        <span class="fed-stat-num">36+</span>
+        <span class="fed-stat-label">Oyuncu</span>
+      </div>
+      <div class="fed-stat-divider"></div>
+      <div class="fed-stat animate-count" data-target="19">
+        <span class="fed-stat-num">19</span>
+        <span class="fed-stat-label">Toplam Maç</span>
+      </div>
+      <div class="fed-stat-divider"></div>
+      <div class="fed-stat animate-count" data-target="5">
+        <span class="fed-stat-num">5</span>
+        <span class="fed-stat-label">Haftalık Sezon</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- AMAC -->
+  <section class="fed-section fed-section-light">
+    <div class="fed-container">
+      <div class="fed-two-col">
+        <div class="fed-text-block animate-slide-left">
+          <div class="fed-section-tag">Neden bu lig?</div>
+          <h2>Amaç: Basketbolu bir<br>sosyalleşme aracına dönüştürmek</h2>
+          <p>
+            Big Bang Basketball, kâr amacı gütmeyen, amatör bir basketbol ligidir.
+            Federasyonun tek amacı insanları basketbolla bir araya getirip gerçek
+            bir camia kurmaktır.
+          </p>
+          <p>
+            Golazo Cup TR'nin sosyalleşmeyi rekabete bağlayan formatından ilham alarak
+            ve Binghamton University Intramural League'lerde edilen deneyimle
+            tasarlanan bu lig, New York Knicks'in 53 yıllık hasrete son verdiği
+            şampiyonluğun heyecanını Türkiye'ye taşıyor.
+          </p>
+          <div class="fed-quote">
+            "Patlama küçük başlar."
+          </div>
+        </div>
+        <div class="fed-pillar-grid animate-slide-right">
+          <div class="fed-pillar">
+            <div class="fed-pillar-icon">🤝</div>
+            <h4>Sosyalleşme</h4>
+            <p>Basketbolu sevenleri bir araya getirip gerçek bir camia kurmak.</p>
+          </div>
+          <div class="fed-pillar">
+            <div class="fed-pillar-icon">🏆</div>
+            <h4>Rekabet</h4>
+            <p>Profesyonelce kurgulanmış bir lig deneyimi ve şampiyonluk heyecanı.</p>
+          </div>
+          <div class="fed-pillar">
+            <div class="fed-pillar-icon">📈</div>
+            <h4>Gelişim</h4>
+            <p>Düzenli maç temposu ile oyuncuların sahadaki seviyesini yükseltmesi.</p>
+          </div>
+          <div class="fed-pillar">
+            <div class="fed-pillar-icon">🎯</div>
+            <h4>Liderlik</h4>
+            <p>Organizasyon ve yönetim deneyimiyle camiaya katkı sağlamak.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BASKAN -->
+  <section class="fed-section fed-section-navy">
+    <div class="fed-container">
+      <div class="fed-president animate-fade-up">
+        <div class="fed-president-badge">
+          <div class="fed-president-avatar">A</div>
+          <div class="fed-president-title-block">
+            <span class="fed-president-role">Federasyon Başkanı</span>
+            <h3>Aykut Engür</h3>
+            <span class="fed-president-sub">Kurucu & Genel Koordinatör</span>
+          </div>
+        </div>
+        <div class="fed-president-bio">
+          <p>
+            Binghamton University Bilgisayar Mühendisliği öğrencisi ve İstanbul
+            Teknik Üniversitesi'nde çift diploma programı öğrencisi olan Aykut Engür,
+            büyük çoğunluğu arkadaşlarıyla yıllarca sürdürdüğü sokak basketbolunun
+            tadını organizasyona taşımak için Big Bang Basketball'ı kurdu.
+          </p>
+          <p>
+            Lig yönetiminden dijital altyapısına (kayıt sistemi, fikstür, istatistik
+            takibi) kadar her aşamayı bizzat tasarlayan ve geliştiren Engür,
+            ligin komiseri sıfatıyla sahada da rakiplerinin karşısına çıkıyor.
+          </p>
+          <div class="fed-president-links">
+            <a href="https://www.instagram.com/bigbang_basketball" target="_blank" rel="noopener" class="fed-ig-btn">
+              📷 @bigbang_basketball
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TURNUVA FORMATI -->
+  <section class="fed-section fed-section-light">
+    <div class="fed-container">
+      <div class="fed-section-heading animate-fade-up">
+        <div class="fed-section-tag">Turnuva yapısı</div>
+        <h2>5 haftada şampiyona ulaşmak</h2>
+        <p>6 takım, 19 maç, 2 sahanlı yarım pota basketbolu.</p>
+      </div>
+
+      <div class="fed-timeline animate-fade-up" style="animation-delay: 0.1s;">
+        <div class="fed-timeline-item">
+          <div class="fed-tl-dot navy">1–3</div>
+          <div class="fed-tl-content">
+            <h4>Normal Sezon <span class="fed-tl-badge">15 maç</span></h4>
+            <p>Her takım diğer 5 takımla birer kez karşılaşır. Sezon sonu en kötü 2 takım elenir, ilk 4 Final Four'a yükselir.</p>
+          </div>
+        </div>
+        <div class="fed-timeline-item">
+          <div class="fed-tl-dot orange">4</div>
+          <div class="fed-tl-content">
+            <h4>Final Four <span class="fed-tl-badge">2 maç</span></h4>
+            <p>1. vs 4. ve 2. vs 3. yarı final karşılaşmaları. Kazananlar finale, kaybedenler 3.lük maçına çıkar.</p>
+          </div>
+        </div>
+        <div class="fed-timeline-item">
+          <div class="fed-tl-dot gold">5</div>
+          <div class="fed-tl-content">
+            <h4>Final & 3.lük <span class="fed-tl-badge">2 maç</span></h4>
+            <p>Şampiyon belirlenir. Her hafta 1 gün 2 saatlik özel saha kiralanarak maçlar oynanır.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KURALLAR -->
+  <section class="fed-section fed-section-tint">
+    <div class="fed-container">
+      <div class="fed-section-heading animate-fade-up">
+        <div class="fed-section-tag">Oyun kuralları</div>
+        <h2>Sahada nasıl oynanır?</h2>
+      </div>
+
+      <div class="fed-rules-grid animate-fade-up" style="animation-delay: 0.1s;">
+        <div class="fed-rule-card">
+          <div class="fed-rule-icon">⏱</div>
+          <h4>Süre</h4>
+          <p>Toplam 30 dakika, 2 devre × 15 dk. Saat hiçbir zaman durmaz.</p>
+        </div>
+        <div class="fed-rule-card">
+          <div class="fed-rule-icon">🏟</div>
+          <h4>Saha</h4>
+          <p>Yarım sahada tek pota. Normal sezonda 2 pota eşzamanlı olarak kullanılır.</p>
+        </div>
+        <div class="fed-rule-card">
+          <div class="fed-rule-icon">🚩</div>
+          <h4>Faul Sistemi</h4>
+          <p>Bireysel faul yok. Takım faul hakkı 10'u geçince her faul serbest atış olur.</p>
+        </div>
+        <div class="fed-rule-card">
+          <div class="fed-rule-icon">📋</div>
+          <h4>Hakemler</h4>
+          <p>Her maçta bir saha hakemi + bir masa hakemi (skor ve istatistik takibi).</p>
+        </div>
+        <div class="fed-rule-card">
+          <div class="fed-rule-icon">👥</div>
+          <h4>Kadro</h4>
+          <p>Her takımda minimum 6 oyuncu bulunması zorunludur.</p>
+        </div>
+        <div class="fed-rule-card">
+          <div class="fed-rule-icon">📜</div>
+          <h4>Taahhüt</h4>
+          <p>Geçerli mazeret olmadan 2+ maç kaçıran oyuncu Federasyona tazminat öder.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ODULLER -->
+  <section class="fed-section fed-section-navy">
+    <div class="fed-container">
+      <div class="fed-section-heading animate-fade-up" style="color: white;">
+        <div class="fed-section-tag" style="color: var(--orange-light);">Ödüller</div>
+        <h2 style="color:white;">Mücadelenin karşılığı sahada ve cüzdanda</h2>
+        <p style="color: rgba(255,255,255,0.7);">Katılım bedeli 1.500 TL. Şampiyon olan takımın oyuncuları bedellerini katlıyor.</p>
+      </div>
+
+      <div class="fed-podium-row animate-fade-up" style="animation-delay: 0.1s;">
+        <div class="fed-podium-card silver">
+          <div class="fed-podium-place">2.</div>
+          <div class="fed-podium-label">Takım</div>
+          <div class="fed-podium-amount">5.000 TL</div>
+        </div>
+        <div class="fed-podium-card gold">
+          <div class="fed-podium-crown">🏆</div>
+          <div class="fed-podium-place">1.</div>
+          <div class="fed-podium-label">Takım</div>
+          <div class="fed-podium-amount">10.000 TL</div>
+        </div>
+        <div class="fed-podium-card bronze">
+          <div class="fed-podium-place">3.</div>
+          <div class="fed-podium-label">Takım</div>
+          <div class="fed-podium-amount">3.000 TL</div>
+        </div>
+      </div>
+
+      <div class="fed-mvp-row animate-fade-up" style="animation-delay: 0.2s;">
+        <div class="fed-mvp-card">
+          <div class="fed-mvp-icon">⭐</div>
+          <div class="fed-mvp-label">Normal Sezon MVP</div>
+          <div class="fed-mvp-amount">500 TL</div>
+        </div>
+        <div class="fed-mvp-card">
+          <div class="fed-mvp-icon">🌟</div>
+          <div class="fed-mvp-label">Final Four MVP</div>
+          <div class="fed-mvp-amount">1.500 TL</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="fed-section fed-section-light fed-cta-section">
+    <div class="fed-container" style="text-align:center;">
+      <div class="animate-pop">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" style="width:80px;height:80px;margin:0 auto 20px;" alt="">
+        <h2 style="font-family: var(--font-display); color: var(--navy); margin-bottom: 10px;">Hazır mısın?</h2>
+        <p style="color: var(--text-gray); margin-bottom: 28px;">
+          Sahada büyük patlama seninle başlasın.
+        </p>
+        <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+          <a href="{{ url_for('register') }}" class="btn btn-primary">Kayıt Ol</a>
+          <a href="{{ url_for('join_team') }}" class="btn btn-outline" style="border-color: var(--navy); color: var(--navy);">Takıma Katıl</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

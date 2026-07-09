@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{{ team.name }}'a Katıl — Big Bang Basketball{% endblock %}
+
+{% block content %}
+  <section class="section section-tint">
+    <div class="section-heading">
+      <h2>"{{ team.name }}" Takımına Katıl</h2>
+      <p>İstediğin forma numarasını seç, takım liderine onay için mail gidecek.</p>
+    </div>
+
+    <form class="form-card" method="POST" action="{{ url_for('request_join_team', team_id=team.id) }}" novalidate>
+      {% if error %}
+        <div class="form-error">{{ error }}</div>
+      {% endif %}
+
+      <div class="form-group">
+        <label for="jersey_number">İstediğin Forma Numarası</label>
+        <input type="number" id="jersey_number" name="jersey_number" min="0" max="99" required>
+        <div class="hint">0-99 arasında, takımda henüz kullanılmayan bir numara seç</div>
+      </div>
+
+      <button type="submit" class="btn btn-primary form-submit">Katılma İsteği Gönder</button>
+    </form>
+  </section>
+{% endblock %}

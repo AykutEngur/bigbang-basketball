@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Katılma İsteği — Big Bang Basketball{% endblock %}
+
+{% block content %}
+  <section class="section section-light">
+    <div class="form-card" style="text-align:center;">
+      {% if outcome == "approved" %}
+        <div class="form-success-icon">&#9989;</div>
+        <h2 style="font-family: var(--font-display); color: var(--navy);">İstek Onaylandı</h2>
+        <p style="color: var(--text-gray);">
+          {{ player.first_name }} {{ player.last_name }} artık <strong>{{ team.name }}</strong>
+          takımının bir üyesi.
+        </p>
+
+      {% elif outcome == "rejected" %}
+        <div class="form-success-icon" style="background: var(--border-soft);">&#10060;</div>
+        <h2 style="font-family: var(--font-display); color: var(--navy);">İstek Reddedildi</h2>
+        <p style="color: var(--text-gray);">Katılma isteği reddedildi, oyuncuya bilgi verilmedi otomatik olarak.</p>
+
+      {% elif outcome == "expired" %}
+        <div class="form-success-icon" style="background: var(--border-soft);">&#9203;</div>
+        <h2 style="font-family: var(--font-display); color: var(--navy);">Süresi Doldu</h2>
+        <p style="color: var(--text-gray);">
+          Bu katılma isteğinin 24 saatlik onay süresi geçti. Oyuncu tekrar istek göndermesi gerekiyor.
+        </p>
+
+      {% elif outcome == "already_decided" %}
+        <div class="form-success-icon" style="background: var(--border-soft);">&#8505;</div>
+        <h2 style="font-family: var(--font-display); color: var(--navy);">Zaten Karar Verildi</h2>
+        <p style="color: var(--text-gray);">Bu istek için zaten bir karar verilmiş.</p>
+
+      {% elif outcome == "jersey_conflict" %}
+        <div class="form-success-icon" style="background: var(--border-soft);">&#9888;</div>
+        <h2 style="font-family: var(--font-display); color: var(--navy);">Forma Numarası Çakışması</h2>
+        <p style="color: var(--text-gray);">
+          Bu forma numarası, isteğin gönderildiği tarihten sonra başka bir oyuncuya
+          atanmış. Oyuncudan farklı bir numara seçip yeniden istek göndermesini isteyin.
+        </p>
+
+      {% else %}
+        <div class="form-success-icon" style="background: var(--border-soft);">&#10060;</div>
+        <h2 style="font-family: var(--font-display); color: var(--navy);">İşlem Tamamlanamadı</h2>
+        <p style="color: var(--text-gray);">Bu link geçersiz veya bir sorun oluştu.</p>
+      {% endif %}
+
+      <a href="{{ url_for('home') }}" class="btn btn-primary" style="margin-top: 18px;">Ana Sayfaya Dön</a>
+    </div>
+  </section>
+{% endblock %}

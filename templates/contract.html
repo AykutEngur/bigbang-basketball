@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Katılımcı Sözleşmesi — Big Bang Basketball{% endblock %}
+
+{% block content %}
+  <section class="section section-light">
+    <div class="container" style="max-width: 760px;">
+      <div class="section-heading" style="text-align:left; margin-bottom:32px;">
+        <h2>Katılımcı Sözleşmesi</h2>
+        <p>Kayıt olmadan önce lütfen aşağıdaki şartları dikkatlice oku.</p>
+      </div>
+
+      <div class="contract-box">
+        <h3>1. Turnuvanın amacı</h3>
+        <p>
+          Big Bang Basketball, kâr amacı gütmeyen, amatör bir basketbol
+          ligidir. Federasyonun önceliği insanları basketbolla bir araya
+          getirip sosyalleştirmektir. Katılım bedelleri saha kirası,
+          hakem ücretleri ve ödüller gibi organizasyon giderlerini
+          karşılamak için kullanılır.
+        </p>
+
+        <h3>2. Katılım ve devamlılık</h3>
+        <p>
+          Her oyuncu, kayıt sırasında bu sözleşmeyi kabul ederek normal
+          sezon ve (varsa) Final Four maçlarına düzenli katılmayı taahhüt
+          eder.
+        </p>
+        <ul>
+          <li>
+            Bir oyuncu sezon boyunca <strong>2 veya daha fazla maça</strong>
+            geçerli bir mazeret bildirmeden katılmazsa, Federasyona
+            <strong>tazminat ödemekle</strong> yükümlüdür.
+          </li>
+          <li>
+            İkinci kaçırılan maçtan sonraki <strong>her ek maç</strong> için
+            de ayrıca tazminat uygulanır.
+          </li>
+          <li>
+            Tazminat tutarları ve mazeret bildirim süreci Federasyon
+            tarafından belirlenir ve oyunculara ayrıca duyurulur.
+          </li>
+        </ul>
+
+        <h3>3. Sportmenlik</h3>
+        <p>
+          Her oyuncu sahada ve saha dışında sportmenlik ruhuna uygun
+          davranmayı kabul eder. Hakeme, rakip oyunculara veya takım
+          arkadaşlarına yönelik saygısız davranış, kasıtlı sakatlama
+          girişimi veya turnuvanın dostluk/sosyalleşme amacını bozucu
+          tutumlar Federasyon tarafından değerlendirilir ve gerekirse
+          oyuncu turnuvadan uzaklaştırılabilir.
+        </p>
+
+        <h3>4. Katılım bedeli</h3>
+        <p>
+          Oyuncu, turnuvaya katılım için belirlenen katılım bedelini
+          öder. Bu bedel saha kirası, hakem ücretleri ve ödüller gibi
+          organizasyon giderlerine katkı amacı taşır; turnuva kâr amacı
+          gütmemektedir.
+        </p>
+
+        <h3>5. Kişisel veriler</h3>
+        <p>
+          Kayıt sırasında paylaşılan ad, soyad, e-posta ve doğum tarihi
+          gibi bilgiler yalnızca turnuva organizasyonu (iletişim, fikstür,
+          istatistik takibi) amacıyla kullanılır ve üçüncü taraflarla
+          paylaşılmaz.
+        </p>
+
+        <p class="contract-footnote">
+          Kayıt formundaki onay kutucuğunu işaretleyerek bu sözleşmenin
+          tüm maddelerini okuduğunu ve kabul ettiğini beyan edersin.
+        </p>
+      </div>
+
+      <a href="{{ url_for('register') }}" class="btn btn-primary" style="margin-top: 24px;">
+        Kayıt formuna geri dön
+      </a>
+    </div>
+  </section>
+{% endblock %}
