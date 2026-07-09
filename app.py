@@ -197,7 +197,7 @@ def register():
 
     session["player_id"] = player_id
     session["first_name"] = form_data["first_name"]
-    send_welcome_email(form_data["email"], form_data["first_name"])
+    #send_welcome_email(form_data["email"], form_data["first_name"])
     return render_template("register_success.html", first_name=form_data["first_name"])
 
 
@@ -548,11 +548,11 @@ def create_team():
         print(f"[create_team] DB kayit hatasi: {exc}")
         return render_with_error("Takım kurulurken bir sorun oluştu.")
 
-    send_team_created_email(player["email"], player["first_name"], form_data["team_name"])
-    return render_template(
-        "create_team_success.html", team_name=form_data["team_name"],
-        min_team_size=MIN_TEAM_SIZE,
-    )
+    #send_team_created_email(player["email"], player["first_name"], form_data["team_name"])
+   # return render_template(
+    #    "create_team_success.html", team_name=form_data["team_name"],
+    #    min_team_size=MIN_TEAM_SIZE,
+    #)
 
 
 # ----------------------------------------------------------------------
@@ -659,10 +659,10 @@ def request_join_team(team_id):
     if captain:
         approve_url = url_for("decide_join_request", token=token, decision="approve", _external=True)
         reject_url = url_for("decide_join_request", token=token, decision="reject", _external=True)
-        send_join_request_email(
-            captain["email"], captain["first_name"], player["first_name"], player["last_name"],
-            team["name"], jersey_number, approve_url, reject_url,
-        )
+        #send_join_request_email(
+           # captain["email"], captain["first_name"], player["first_name"], player["last_name"],
+            #team["name"], jersey_number, approve_url, reject_url,
+       # )
 
     return render_template("join_team_request_sent.html", team=team)
 
