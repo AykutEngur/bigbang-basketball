@@ -1,7 +1,8 @@
 """
 Big Bang Basketball - Flask web app
 """
-
+import cloudinary
+import cloudinary.uploader
 import os
 import uuid
 import secrets
@@ -19,7 +20,11 @@ import db
 from mailer import send_welcome_email, send_team_created_email, send_join_request_email
 
 load_dotenv()
-
+cloudinary.config(
+    cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.environ.get("CLOUDINARY_API_KEY"),
+    api_secret=os.environ.get("CLOUDINARY_API_SECRET"),
+)
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "dev-only-insecure-key-change-me")
 
@@ -53,20 +58,19 @@ def _allowed_photo(filename):
     )
 
 
-def _save_square_image(file_storage, save_dir, prefix):
-    ext = secure_filename(file_storage.filename).rsplit(".", 1)[1].lower()
-    unique_name = f"{prefix}_{uuid.uuid4().hex[:8]}.{ext}"
-    save_path = os.path.join(save_dir, unique_name)
-    image = Image.open(file_storage)
-    image = image.convert("RGB")
-    width, height = image.size
-    side = min(width, height)
-    left = (width - side) // 2
-    top = (height - side) // 2
-    image = image.crop((left, top, left + side, top + side))
-    image = image.resize((400, 400))
-    image.save(save_path, quality=85, optimize=True)
-    return unique_name
+def _upload_to_cloudinary(file_storage, folder, public_id_prefix):
+    """Resmi Cloudinary'e yukler, URL dondurur."""
+    unique_id = f"{public_id_prefix}_{uuid.uuid4().hex[:8]}"
+    result = cloudinary.uploader.upload(
+        file_storage,
+        public_id=unique_id,
+        folder=folder,
+        transformation=[
+            {"width": 400, "height": 400, "crop": "fill", "gravity": "face"},
+        ],
+        overwrite=True,
+    )
+    return result["secure_url"]
 
 
 @app.context_processor
@@ -287,25 +291,15 @@ def upload_profile_photo():
         )
 
     try:
-        unique_name = _save_square_image(file, PHOTO_UPLOAD_DIR, f"player_{player_id}")
+        photo_url = _upload_to_cloudinary(file, "bigbang/players", f"player_{player_id}")
     except Exception as exc:
-        print(f"[upload_profile_photo] Resim isleme hatasi: {exc}")
+        print(f"[upload_profile_photo] Cloudinary yuklenme hatasi: {exc}")
         return render_template(
             "profile.html", player=db.get_player_by_id(player_id),
-            photo_error="Resim işlenirken bir sorun oluştu.",
+            photo_error="Resim yüklenirken bir sorun oluştu.",
         )
 
-    try:
-        current_player = db.get_player_by_id(player_id)
-        old_photo = current_player.get("profile_photo") if current_player else None
-        if old_photo:
-            old_path = os.path.join(PHOTO_UPLOAD_DIR, old_photo)
-            if os.path.exists(old_path):
-                os.remove(old_path)
-    except Exception:
-        pass
-
-    db.update_player_photo(player_id, unique_name)
+    db.update_player_photo(player_id, photo_url)
     return redirect(url_for("profile"))
 
 
@@ -534,10 +528,10 @@ def create_team():
         if logo_size > MAX_PHOTO_SIZE_BYTES:
             return render_with_error("Logo dosya boyutu 5 MB'ı geçemez.")
         try:
-            logo_filename = _save_square_image(logo_file, TEAM_LOGO_UPLOAD_DIR, "team")
+            logo_filename = _upload_to_cloudinary(logo_file, "bigbang/logos", "team")
         except Exception as exc:
-            print(f"[create_team] Logo isleme hatasi: {exc}")
-            return render_with_error("Logo işlenirken bir sorun oluştu.")
+            print(f"[create_team] Logo Cloudinary hatasi: {exc}")
+            return render_with_error("Logo yüklenirken bir sorun oluştu.")
 
     try:
         team_id = db.create_team(

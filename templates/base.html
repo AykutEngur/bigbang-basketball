@@ -28,7 +28,7 @@
           <div class="nav-profile-wrapper" id="nav-profile-wrapper">
             <button class="cta cta-with-avatar nav-profile-btn" id="nav-profile-btn" type="button" aria-haspopup="true" aria-expanded="false">
               {% if current_player.profile_photo %}
-                <img class="nav-avatar" src="{{ url_for('static', filename='uploads/profile_photos/' + current_player.profile_photo) }}" alt="Profil fotoğrafı">
+              <img class="nav-avatar" src="{{ current_player.profile_photo }}"
               {% else %}
                 <span class="nav-avatar nav-avatar-placeholder">{{ current_player.first_name[0] }}</span>
               {% endif %}

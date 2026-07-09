@@ -15,7 +15,7 @@
           <a href="{{ url_for('team_detail', team_id=t.id) }}" class="team-card">
             <div class="team-card-logo">
               {% if t.logo %}
-                <img src="{{ url_for('static', filename='uploads/team_logos/' + t.logo) }}" alt="{{ t.name }} logosu">
+                <img src="{{ t.logo }}">
               {% else %}
                 <div class="team-card-logo-placeholder">&#127936;</div>
               {% endif %}

@@ -13,7 +13,7 @@
 
       <div class="profile-photo-block">
         {% if player.profile_photo %}
-          <img class="profile-photo-large" src="{{ url_for('static', filename='uploads/profile_photos/' + player.profile_photo) }}" alt="Profil fotoğrafı">
+        <img class="profile-photo-large" src="{{ player.profile_photo }}">
         {% else %}
           <div class="profile-photo-large profile-photo-placeholder">{{ player.first_name[0] }}</div>
         {% endif %}

@@ -15,7 +15,7 @@
           <div class="player-row">
             <div class="player-row-photo">
               {% if p.profile_photo %}
-                <img src="{{ url_for('static', filename='uploads/profile_photos/' + p.profile_photo) }}" alt="{{ p.first_name }} {{ p.last_name }}">
+              <img src="{{ p.profile_photo }}">
               {% else %}
                 <div class="player-row-photo-placeholder">{{ p.first_name[0] }}</div>
               {% endif %}

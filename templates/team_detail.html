@@ -7,7 +7,7 @@
     <div class="team-detail-header">
       <div class="team-detail-logo">
         {% if team.logo %}
-          <img src="{{ url_for('static', filename='uploads/team_logos/' + team.logo) }}" alt="{{ team.name }} logosu">
+          <img src="{{ t.logo }}">
         {% else %}
           <div class="team-card-logo-placeholder">&#127936;</div>
         {% endif %}
@@ -48,7 +48,7 @@
             <div class="player-row">
               <div class="player-row-photo">
                 {% if m.profile_photo %}
-                  <img src="{{ url_for('static', filename='uploads/profile_photos/' + m.profile_photo) }}" alt="{{ m.first_name }} {{ m.last_name }}">
+                <img src="{{ m.profile_photo }}">
                 {% else %}
                   <div class="player-row-photo-placeholder">{{ m.first_name[0] }}</div>
                 {% endif %}
